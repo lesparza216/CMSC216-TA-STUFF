@@ -1,0 +1,245 @@
+# Welcome to the Gauntlet test your assembly skills 
+# This is meant to serve as basic practice for you to familiarize yourself with basic assembly functions
+# Challenge if you dare those who leave the Gauntlet come back ready for the project
+# You might need the cheat sheet to help guide you
+
+.text
+#----------------------------------------------------------------------------------------------------------------------
+#The basics
+
+# Problem 1: Very basic just place ten into the return register remember to use the right size
+# Here we are returning an integer
+
+.global return_ten
+return_ten:
+
+movl $10, %eax
+ret
+#----------------------------------------------------------------------------------------------------------------------
+# Problem 2: Now try this one add the two integer arguments together
+
+.global add_two_ints
+add_two_ints:
+
+addl %edi, %esi
+movl %esi, %eax
+
+ret
+#----------------------------------------------------------------------------------------------------------------------
+# Problem 3: What about this try adding two short arguments together
+
+.global add_two_shorts
+add_two_shorts:
+
+addw %di, %si
+movw %si, %ax
+
+ret
+#----------------------------------------------------------------------------------------------------------------------
+# Problem 4: Mask the parameter which is an integer by turning on the third bit remember bit indexes are zero based
+
+.global or_masking
+or_masking:
+
+orl $0b1000, %edi
+movl %edi, %eax
+
+ret
+#----------------------------------------------------------------------------------------------------------------------
+# Problem 5: Mask the parameter which is an integer by masking the first four bits
+
+.global and_masking
+and_masking:
+
+andl $0b01111, %edi
+movl %edi, %eax
+
+ret
+#----------------------------------------------------------------------------------------------------------------------
+# Problem 6: Divide the following argument by two using a bit wise shift
+
+.global divide_by_shift
+divide_by_shift:
+
+sarl $1, %edi
+movl %edi, %eax
+
+ret
+#----------------------------------------------------------------------------------------------------------------------
+# Problem 7: More complex then the last function this function makes use of the idivX command to divide the first
+# argument by the second one
+
+.global just_divide
+just_divide:
+
+movl %edi, %eax
+cqto 
+idivl %esi
+
+
+ret
+
+#----------------------------------------------------------------------------------------------------------------------
+#Control Flow
+
+# Problem 1: Checks to see if the provided argument is greater than 10 returns true if so false otherwise
+.global basic_conditional
+basic_conditional:
+
+cmpl $10, %edi          #Using the comparsion instruction we check to see if x > 10
+jg JUMP                 #If x is greater than 10 we jump to a label that we created
+movq $0, %rax           #Return zero if false
+
+ret
+
+JUMP:                   #We can create labels by doing NAME: we use these for control flow
+    movq $1, %rax
+    ret
+
+#----------------------------------------------------------------------------------------------------------------------
+
+# Problem 2: Checks to see if the provided argument is greater than 21 returns true if so
+# However if the value is greater than 18 then it will also return true false otherwise
+
+.global nested_conditional
+nested_conditional:
+cmpl $21, %edi          #Compare our argument against the upper bound the same as if x > 21
+
+jg JUMP2                #If x is greater than 21 then we go to return one
+
+cmpl $18, %edi          #Else we compare x against 18
+jg JUMP3                #If x was greater than 18 we go to return 1
+movq $0, %rax           #Return 0 by default
+
+ret
+
+JUMP2:                  
+    movq $1, %rax
+    ret
+JUMP3:
+    movq $1, %rax
+    ret
+
+#----------------------------------------------------------------------------------------------------------------------
+# Problem 3: Using something like a for loop iterate up to the given argument adding each previous element
+
+.global for_loop
+for_loop:
+
+movq $0, %r8        #r8 will play the role of our i
+movq $0, %r9        #r9 will play the role of our sum
+
+LOOP: 
+addl %r8d, %r9d     # The same as doing sum += i
+addl $1, %r8d       #increment i
+
+cmpl %edi, %r8d     #Check if i is less than our upper bound
+jle LOOP            #If i is still less than or equal to the upper bound keep looping
+
+movl %r9d, %eax
+ret
+#----------------------------------------------------------------------------------------------------------------------
+
+# Problem 4: Using something like a while loop see how many times we can subtract the second argument from the first
+
+.global while_loop
+while_loop:
+
+movq $0, %r9    # r9 will be our sum again
+
+WHILE_LOOP: 
+cmpl $0, %edi   #Compare our x against 0
+
+jle END_LOOP    #The negation of x being greater than 0 is if x is less than or equal to 0 if this is the case end the loop
+                #jump if signed is also an option but does not handle edge case if x is 0
+
+subl %esi, %edi #Subtract x by y
+addl $1, %r9d   #increment the counter
+
+jmp WHILE_LOOP  #Repeat the loop
+
+
+END_LOOP:
+movl %r9d, %eax  
+ret
+
+#----------------------------------------------------------------------------------------------------------------------
+#Pointer, dereferencing, and structures
+
+# Problem 1: Given a pointer dereference it and change the value to ten
+.global simple_dereference
+simple_dereference:
+
+movl $10, (%rdi)  #MUST ALWAYS USE THE FULL 64 BIT REGISTERS OTHERWISE SEG FAULT
+
+ret
+#----------------------------------------------------------------------------------------------------------------------
+# Problem 2: Given an address of an integer add twelve to it
+.global simple_dereference2
+simple_dereference2:
+
+addl $10, (%rdi)
+addl $2, (%rdi)
+#TODO implement simple_dereference2
+
+ret
+#----------------------------------------------------------------------------------------------------------------------
+# Problem 3: Given an array of ints the second element
+.global inside_the_array
+inside_the_array:
+
+movl 4(%rdi), %eax      #Since the first element is at 0(%rdi) the second one would be at 4(%rdi)
+                        #Each element is four bytes long
+
+ret
+#----------------------------------------------------------------------------------------------------------------------
+# Problem 4: Given an array of shorts return the fourth element
+.global inside_the_array2
+inside_the_array2:
+
+movw 6(%rdi), %ax       #Since each short is 2 bytes long getting the fourth element would be a 6 byte offset
+
+ret
+#----------------------------------------------------------------------------------------------------------------------
+# Problem 5: Given an array of ints and an index return the element with the index given
+.global inside_the_array3
+inside_the_array3:
+
+movl (%rdi,%rsi,4), %eax # The syntax is as follows (pointer_to_array ,index, weight_of_each_element)
+                         # In our case rdi holds the address of the array and rsi holds the index 
+                         # Each element is four bytes so the weight should be 4 in this case
+
+ret
+#----------------------------------------------------------------------------------------------------------------------
+# Problem 6: Given a pointer to a package structure add the two elements together
+.global star_struct
+star_struct:
+
+movl 0(%rdi), %r8d          # Move x into r8
+movl 4(%rdi), %r9d          # Move y into r9
+addl %r8d, %r9d             # Add x and y together the result is stored in r9
+movl %r9d, %eax             # Place the result into the return register 
+
+ret
+#----------------------------------------------------------------------------------------------------------------------
+# Problem 7: Given a structure passed in as an argument NOT AS A POINTER add the two elements together
+# This process is completely different than dereferencing a structure
+.global star_struct2
+star_struct2:
+
+movq %rdi, %r9           # Give r9 a copy of the structure
+andl $0xFFFFFFFF, %edi   # Using bit masking we isolate the first 32 bits which belong to x now rdi holds x
+shrq $32, %r9            # Using bit wise shifting we isolate the uppder 32 bits which belong to y now r9 holds y
+
+addl %r9d, %edi          # Add the result together store it inside rdi
+movl %edi, %eax          # Place the value into the return register
+
+# TODO implement star_struct2
+
+ret
+
+
+
+
+
+
