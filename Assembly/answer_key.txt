@@ -234,8 +234,6 @@ shrq $32, %r9            # Using bit wise shifting we isolate the uppder 32 bits
 addl %r9d, %edi          # Add the result together store it inside rdi
 movl %edi, %eax          # Place the value into the return register
 
-# TODO implement star_struct2
-
 ret
 
 
