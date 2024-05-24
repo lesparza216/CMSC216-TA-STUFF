@@ -76,18 +76,18 @@ In the example above you notice in order to print variables we must have a forma
 
 
 ## Basic rules
-  Since C falls under the Procedural programming paradigm unlike Java's object oriented programming paradigm there are some rules you must follow that was not present in Java
+  Since C falls under the Procedural programming paradigm meaning C is built around the idea that programs are sequences of instructions to be executed unlike Java's object oriented programming paradigm there are some rules you must follow that was not present in Java.
 
 - Function prototypes must always be declared meaning suppose we had the following C program
 ```C
 #include <stdio.h>
 int main(int argc, char *argv){
     int x = 10;
-    char c = function(x);
+    char c = func(x);
     printf("%c Was the character\n",c);
     return 0;
 }
-char function(int x){
+char func(int x){
     if(x == 10){
         return 'A';
     }else{
@@ -95,20 +95,27 @@ char function(int x){
     }
 }
 ```
-This will not compile because at compile time the program has no idea what function is since there was never a reference to it before a simple fix would be to include the prototype at the start like the following
+This will not compile because at compile time the program has no idea what func is since there was never a reference to it before. Imagine out of no where you saw the following
+```C
+var = 2;
+```
+Is var a short or an int or a float or what we have no idea because we never declared what var was.
 
+  Likewise the compiler sees the function being called and does not understand what it is so a simple fix would be the following
 ```C
 #include <stdio.h>
 
-char function(int); // The prototype is just the return type, name, and parameter types
+//Declare the prototype so C knows what it is dealing with
+
+char func(int); // The prototype is just the return type, name, and parameter types
 
 int main(int argc, char *argv){
     int x = 10;
-    char c = function(x);
+    char c = func(x);
     printf("%c Was the character\n",c);
     return 0;
 }
-char function(int x){
+char func(int x){
     if(x == 10){
         return 'A';
     }else{
@@ -120,7 +127,7 @@ char function(int x){
 
 - NOTHING IN C IS EVER INITIALIZE this is an important thing to know because unlike java declaring variables like
 ```C
-int x; // The value is not zero
+int x; // The value is not zero it's garbage could be anything
 ```
 Does not automatically set the value to 0 it will be given a random value during each compile this is not true for global variables
 
