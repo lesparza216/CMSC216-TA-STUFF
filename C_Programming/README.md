@@ -60,7 +60,7 @@ As mentioned before C is not an object oriented programming language concepts li
   ```C
   #include <stdio.h>
   ```
-  Just like in Java if you wanted to include functions you will need later down the line you will need to include them just like in Java you would do the following
+  Just like in Java if you wanted to include functions you will need later down the line you will need to include them just like in Java you would need to do the following if you intended to use the scanner.
   ```Java
   import java.util.Scanner;
   ```
