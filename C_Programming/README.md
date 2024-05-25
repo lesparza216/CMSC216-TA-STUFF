@@ -12,15 +12,16 @@
 
 # Basics
 
-## What is programming like in C?
-- Programming in C is unlike Java in the sense that you have more control and there is less hand holding. In C you can directory keep track and modify memory addresses which can often be dangerous and lead to programs with security vulnerabilities. 
+### What is programming like in C?
+- C falls under the **Procedural programming paradigm** meaning C is built around the idea that programs are sequences of instructions to be executed. For reference Java fell under the **Object-oriented programming** which is built around the idea of creating and interacting with objects that maintain state and encapsulate variables and methods. OOP focuses on concepts like classes, inheritance, polymorphism, encapsulation, and abstraction.
 
-- The trade off is that you lose all the baggage with object oriented programming there is no concept of Abstraction, encapsulation, polymorphism, and inheritance.
+- Programming in C gives you more control over memory and hardware compared to Java, with less abstraction and more direct memory manipulation. This can lead to powerful and efficient programs but also introduces risks like security vulnerabilities.
+
+- The trade off is that you lose all that comes with object oriented programming there is no concept of Abstraction, encapsulation, polymorphism, and inheritance in C.
 
 - In C the only thing you will need to worry about is how things work in the low level
 ### Variables
 Just like java the main primitive types are here with a new familiar face and an old one missing
-
 | Variable           |Size                                  |
 | -------------      | -------------                        |
 | char               | 1 bytes                              |
@@ -32,7 +33,9 @@ Just like java the main primitive types are here with a new familiar face and an
 | pointer variable   | 8 bytes                              |
 
 
-As you probably notice there is no boolean type in C truth values are determine by integers where 0 denotes false and anything that is not 0 is true even -9999999. Pointers are a special type of variable that hold an address of another variable this will be covered later
+As you probably notice there is no boolean type in C truth values are determine by integers where 0 denotes false and anything that is not 0 is true even (-9999999). 
+  Pointers are a special type of variable that hold an address of another variable this will be covered later
+***
 ### So what does a program in C look like?
 ```C
 #include <stdio.h>
@@ -51,32 +54,57 @@ public class PlayGround {
 	}
 }
 ```
-As mentioned before C is not an object oriented programming language concepts like public, private, protected etc are only exclusive to the object oriented paradigm. However, the static keyword in C serves a similar purpose to Java.
+As mentioned before C is not an object oriented programming language concepts like public, private, protected etc are only exclusive to the object oriented paradigm. However, the static keyword in C serves a similar purpose to Java. In addition there is no concepts of string in C we use an array of characters to represent strings.
+  
+  However, notice the following
+  ```C
+  #include <stdio.h>
+  ```
+  Just like in Java if you wanted to include functions you will need later down the line you will need to include them just like in Java you would do the following
+  ```Java
+  import java.util.Scanner;
+  ```
+  Despite the major differences due to having completely different paradigms, some things work almost the same. For example, to print "Hello, World!" ten times in C:
+  ```C
+  #include <stdio.h>
+  int x; // Global variables exist too and unlike variables declared inside functions they are initialize to 0
+  int main(void){
+    int i = 0;
 
+    for(i = 0; i < 10;i++){
+        printf("Hello World!\n");
+    }
+    
+    return 0; // Always return 0 to tell linux our program was successful and reached the end
+  }
+
+  ```
+***
 ### Printf function and format specifiers
-C uses printf to print strings and variables to standard out (aka your screen) 
+C uses printf to print strings and variables to standard out (aka your screen) which is brought to you by <stdio.h> 
 ```C
 int x = 10;
 printf("The value of x is %d",x);
 ```
 In the example above you notice in order to print variables we must have a format specifier in this case %d to print out variables below are a table of all them.
-| SPECIFIER     | USED FOR                             |
-| ------------- | -------------                        |
-| %c   | char                                          |
-| %hi  | short (signed)                                |
-| %hu  | short (unsigned)                              |
-| %d   | integer in decimal                            |
-| %o   | integer in octal                              |
-| %x   | integer in hexadecimal                        |
-| %u   | unsigned integer in decimal                   |
-| %f   | float                                         |
-| %e   | floating point number in scientific notation  |
-| %Lf  | long double                                   |
-| %p   | an address or pointer                         |
+| SPECIFIER     | USED FOR                                      |
+| ------------- | ----------------------------------------------|
+| %c            | char                                          |
+| %hi           | short (signed)                                |
+| %hu           | short (unsigned)                              |
+| %d            | integer in decimal                            |
+| %o            | integer in octal                              |
+| %x            | integer in hexadecimal                        |
+| %u            | unsigned integer in decimal                   |
+| %f            | float                                         |
+| %e            | floating point number in scientific notation  |
+| %Lf           | long double                                   |
+| %p            | an address or pointer                         |
+| %zu           | printing size_t variables (just nice to know) |
 
-
-## Basic rules
-  Since C falls under the Procedural programming paradigm meaning C is built around the idea that programs are sequences of instructions to be executed unlike Java's object oriented programming paradigm there are some rules you must follow that was not present in Java.
+***
+### Basic rules
+  Since follows a different paradigm there are some rules you must follow that was not present in Java.
 
 - Function prototypes must always be declared meaning suppose we had the following C program
 ```C
@@ -99,9 +127,9 @@ This will not compile because at compile time the program has no idea what func 
 ```C
 var = 2;
 ```
-Is var a short or an int or a float or what we have no idea because we never declared what var was.
+Is var a short or an int or a float or what we have no idea because we never saw what type var was before.
 
-  Likewise the compiler sees the function being called and does not understand what it is so a simple fix would be the following
+  Likewise the compiler sees the function being called and does not understand what type it is so a simple fix would be the following
 ```C
 #include <stdio.h>
 
@@ -111,7 +139,7 @@ char func(int); // The prototype is just the return type, name, and parameter ty
 
 int main(int argc, char *argv){
     int x = 10;
-    char c = func(x);
+    char c = func(x); // Now our program knows exactly what this is
     printf("%c Was the character\n",c);
     return 0;
 }
@@ -125,11 +153,11 @@ char func(int x){
 ```
 - No function overloading two functions can not share the same name even if they have different parameters and argument types
 
-- NOTHING IN C IS EVER INITIALIZE this is an important thing to know because unlike java declaring variables like
+- **NOTHING IN C IS EVER INITIALIZE EXCEPT GLOBAL VARIABLES** this is an important thing to know because unlike java declaring variables like
 ```C
 int x; // The value is not zero it's garbage could be anything
 ```
-Does not automatically set the value to 0 it will be given a random value during each compile this is not true for global variables
+Does not automatically set the value to 0 it will be given a random value during each compile this is not true for **global variables**
 
 
 
@@ -148,11 +176,11 @@ struct NAME{
 ``` 
 We can then access each field of a struct via the following syntax
 ```C
-struct NAME EXAMPLE;
+struct NAME EXAMPLE; 
 EXAMPLE.Variable_1;
 EXAMPLE.Variable_2;
 EXAMPLE.Variable_3; 
-//And so on
+//And so on observe the following example
 ```
   ## Example 1
 ```C
@@ -180,7 +208,7 @@ In this basic Example we declare a student structure and initialize it's fields 
 typedef struct student {
     int ID;
     int age;
-    char name[128];
+    char name[128]; // There are no strings in C only arrays of characters
     char email[128];
 } Student;
 
@@ -208,6 +236,7 @@ By making use of the string library strcpy() function we are able to initialize 
 
 
 # Memory Alignment
+
 ```C
 #include <stdalign.h>
 #include <stddef.h>
