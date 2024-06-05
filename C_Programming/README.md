@@ -163,7 +163,7 @@ Does not automatically set the value to 0 it will be given a random value during
 # Structures
 
 - You can think of structures as like Classes in Java meaning if you break it down at it's fundamentally core what was a class in Java?
-Just a bunch of methods and variables put together in a nice package unlike structures are exactly that minus the method part.
+Just a bunch of methods and variables put together in a nice package structures are exactly that minus the method part.
 
   We typically declare structures in C via the following syntax 
 ``` C
@@ -227,7 +227,7 @@ int main(void) {
 Using the same example as before as you can see we modified the fields a little bit by adding an email and name field.
 By making use of the string library strcpy() function we are able to initialize the fields of the name and email array field.
 
-  In addition notice use of the typedef keyword what this does is assign types an alias so unlike in the previous example instead of declaring my structure by struct student I used typedef to give the entire thing an Alias that of Student which I can use instead of the struct student tag
+  In addition notice use of the typedef keyword what this does is assign types an alias so unlike in the previous example instead of declaring my structure by struct student I used typedef to give the entire thing an alias that of Student which I can use instead of the struct student tag.
 
 
 
