@@ -3,11 +3,10 @@
 
 ## Table of Contents
 - [Basics](#basics)
+- [Structures](#structures)
 - [Memory Alignment](#memory-alignment)
 - [Pointers](#pointers)
 - [Dynamic memory allocation](#dynamic-memory-allocation)
-- [Stack Management](#stack-management)
-
 
 
 # Basics
