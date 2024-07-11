@@ -12,7 +12,7 @@
 # Basics
 
 ### What is programming like in C?
-- C falls under the **Procedural programming paradigm** meaning C is built around the idea that programs are sequences of instructions to be executed. For reference Java fell under the **Object-oriented programming** which is built around the idea of creating and interacting with objects that maintain state and encapsulate variables and methods. OOP focuses on concepts like classes, inheritance, polymorphism, encapsulation, and abstraction.
+- C falls under the **Procedural programming paradigm** meaning C is built around the idea that programs are sequences of instructions to be executed. For reference Java fell under the **Object-oriented programming** which is built around the idea of creating and interacting with objects that maintain state and encapsulate variables and methods. OOP focuses on concepts like classes, inheritance, polymorphism, encapsulation, and abstraction. 
 
 - Programming in C gives you more control over memory and hardware compared to Java, with less abstraction and more direct memory manipulation. This can lead to powerful and efficient programs but also introduces risks like security vulnerabilities.
 
