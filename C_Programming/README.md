@@ -179,7 +179,7 @@ struct NAME EXAMPLE;
 EXAMPLE.Variable_1;
 EXAMPLE.Variable_2;
 EXAMPLE.Variable_3; 
-//And so on observe the following example
+//And so on observe the following  example
 ```
   ## Example 1
 ```C
