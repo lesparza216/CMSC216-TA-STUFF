@@ -235,7 +235,7 @@ By making use of the string library strcpy() function we are able to initialize 
 
 
 # Memory Alignment
-
+Everything in C has an address which is something that is assigned by the compiler to keep track of things in a program.
 ```C
 #include <stdalign.h>
 #include <stddef.h>
