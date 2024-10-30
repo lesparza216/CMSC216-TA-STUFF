@@ -88,12 +88,12 @@ basic_conditional:
 
 cmpl $10, %edi          #Using the comparsion instruction we check to see if x > 10
 jg JUMP                 #If x is greater than 10 we jump to a label that we created
-movq $0, %rax           #Return zero if false
+movl $0, %eax           #Return zero if false
 
 ret
 
 JUMP:                   #We can create labels by doing NAME: we use these for control flow
-    movq $1, %rax
+    movl $1, %eax
     ret
 
 #----------------------------------------------------------------------------------------------------------------------
@@ -109,15 +109,15 @@ jg JUMP2                #If x is greater than 21 then we go to return one
 
 cmpl $18, %edi          #Else we compare x against 18
 jg JUMP3                #If x was greater than 18 we go to return 1
-movq $0, %rax           #Return 0 by default
+movl $0, %eax           #Return 0 by default
 
 ret
 
 JUMP2:                  
-    movq $1, %rax
+    movl $1, %eax
     ret
 JUMP3:
-    movq $1, %rax
+    movl $1, %eax
     ret
 
 #----------------------------------------------------------------------------------------------------------------------
